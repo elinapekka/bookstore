@@ -18,6 +18,7 @@ public class Book {
 	private double price;
 	
 	public Book(String title, String author, int publicationYear, String isbn, double price) {
+		super();
 		this.title = title;
 		this.author = author;
 		this.publicationYear = publicationYear;
