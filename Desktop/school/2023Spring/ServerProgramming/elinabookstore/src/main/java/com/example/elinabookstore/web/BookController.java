@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.elinabookstore.model.Book;
 import com.example.elinabookstore.model.BookRepository;
+import com.example.elinabookstore.model.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	@Autowired
 	private BookRepository repository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@RequestMapping("/index")
 	public String bookForm(Model model) {
@@ -32,6 +35,7 @@ public class BookController {
     @RequestMapping(value = "/addbook")
     public String addStudent(Model model){
     	model.addAttribute("book", new Book());
+    	model.addAttribute("categories", categoryRepository.findAll());
         return "addbook";
     }  
 	
@@ -50,6 +54,7 @@ public class BookController {
     @RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
     public String editBook(@PathVariable("id") Long bookId, Model model) {
     	model.addAttribute("book", repository.findById(bookId));
+    	model.addAttribute("categories", categoryRepository.findAll());
     	return "editbook";
     } 
 }
