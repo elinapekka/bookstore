@@ -1,5 +1,7 @@
 package com.example.elinabookstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Book {
 	private String isbn;
 	private double price;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cateogryid")
 	private Category category;
