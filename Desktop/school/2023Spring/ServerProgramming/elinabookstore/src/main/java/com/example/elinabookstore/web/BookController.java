@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +26,24 @@ public class BookController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	
+    @RequestMapping(value="/login")
+    public String login() {
+    	return "login";
+    }
+	
+    /*
 	@RequestMapping("/index")
 	public String bookForm(Model model) {
 		return "index";
 	}
-	
+	*/
 	
 	@RequestMapping(value = {"/", "/booklist"})
 	public String bookList(Model model) {
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = user.getUsername();
+    	model.addAttribute("name", username);
 		model.addAttribute("books", repository.findAll());
 		return "booklist";
 	}
@@ -49,6 +62,7 @@ public class BookController {
         return "redirect:booklist";
     }    
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
     	repository.deleteById(bookId);
@@ -73,6 +87,5 @@ public class BookController {
     public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long id) {
     	return repository.findById(id);
     }
-    
-    
+
 }
