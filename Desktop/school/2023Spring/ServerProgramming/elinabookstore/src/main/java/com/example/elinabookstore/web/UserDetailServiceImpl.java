@@ -1,5 +1,7 @@
 package com.example.elinabookstore.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User curruser = repository.findByUsername(username);
+		List<User> users = repository.findByUsername(username);
+		User curruser = users.get(0);
 		UserDetails user = new org.springframework.security.core.userdetails.User(username, curruser.getPasswordHash(), 
 				AuthorityUtils.createAuthorityList(curruser.getRole()));
 		

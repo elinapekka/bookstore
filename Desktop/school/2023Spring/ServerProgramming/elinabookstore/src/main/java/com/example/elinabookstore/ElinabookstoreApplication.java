@@ -25,6 +25,7 @@ public class ElinabookstoreApplication {
 			catRepository.save(new Category("Fantasy"));
 			catRepository.save(new Category("Drama"));
 			catRepository.save(new Category("Scientific"));
+			catRepository.save(new Category("Coming-of-age"));
 			
 			repository.save(new Book("Da Vinci Code", "Dan Brown", 2003, "9789524752060", 14.55, catRepository.findByName("Thriller").get(0)));
 			repository.save(new Book("Life of Pi", "Yann Martel", 2001, "9789524742367", 12.35, catRepository.findByName("Adventure").get(0)));
