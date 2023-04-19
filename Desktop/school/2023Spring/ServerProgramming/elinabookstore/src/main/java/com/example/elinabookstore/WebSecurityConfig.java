@@ -26,6 +26,8 @@ public class WebSecurityConfig {
 		http
 		.authorizeHttpRequests().requestMatchers("/css/**").permitAll()
 		.and()
+		.authorizeHttpRequests().requestMatchers("/css/**").permitAll()
+		.and()
 		.authorizeHttpRequests().anyRequest().authenticated()
 		.and()
 		.headers().frameOptions().disable()
